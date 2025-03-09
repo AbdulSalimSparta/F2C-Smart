@@ -1,0 +1,9 @@
+.nav-link {
+    color: black;  /* Set text color to black */
+    text-decoration: none; /* Remove underline */
+    font-weight:400; /* Optional: Make it bold */
+  }
+  
+  .nav-link:hover {
+    color: #555; /* Slightly darker color on hover */
+  }

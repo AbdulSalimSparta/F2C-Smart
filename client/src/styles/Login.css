@@ -1,0 +1,109 @@
+.loginpg{
+    background-image:url("https://wallpaperaccess.com/full/1163988.jpg");
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    background-position: center ;
+  }
+  .loginpg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Adjust the height as needed */
+    background: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+}
+  
+  .center {
+    display: flex;
+    height: 100%;
+    flex-wrap: wrap;
+    gap:50px;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    margin: 50px;
+    
+  }
+
+  .iptbcontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form{
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width:90%;
+    height: fit-content;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .ipt{
+    border-radius: 25px;
+    border: 2px solid rgb(255, 255, 255);
+    margin: 5px;
+    width: 80%;
+    height: 50px; 
+    font-size: 80%;
+    padding-left: 15px;
+    padding-right: 15px;
+    
+  }
+  
+  p{
+    font-size: 0.7rem;
+    margin: 15px;
+    font-weight: 200;
+  }
+  .boxlogin{
+    display: flex;
+    height: fit-content;
+    width: 350px;
+    color: white !important;
+    background: rgba(255, 255, 255, 0.17);
+    border-radius: 50px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.2px);
+    -webkit-backdrop-filter: blur(8.2px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    flex-direction: column; 
+  }
+  
+  #conttxt{
+    font-size: 0.8rem;
+    font-weight: 200;
+    margin:5px 0 0 0;
+  }
+  #welcome{
+    font-size: 1.5rem;
+    margin: 60px 0 0 0;
+   
+  }
+  
+  #login-btn{
+    border-radius: 25px;
+    border: 2px solid #00970d;
+    color: white;
+    margin: 5px;
+    width: 80%;
+    height: 50px; 
+    font-size: 0.8rem;
+    background-color: #00970d;
+  }
+  
+  #loginfrm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    height: max-content;
+  }
+  
+  

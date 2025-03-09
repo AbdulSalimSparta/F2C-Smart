@@ -1,0 +1,31 @@
+
+.ProductPageHead{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+.w-20 {
+  width: 20% !important;
+}
+.ProductImgBox{
+  margin: auto;
+  width: 50%;
+
+  img{
+    object-fit: contain;
+  }
+}
+.ProductTxtBox{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px;
+}
+@media (max-width: 800px) {
+  .ProductPageHead {
+  flex-direction: column;
+  }
+  }
+
+  
