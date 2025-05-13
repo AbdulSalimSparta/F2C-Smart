@@ -1,156 +1,138 @@
 import express from "express";
-import pg from "pg";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import cors from "cors";
-import env from "dotenv";
+import dotenv from "dotenv";
+import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import db from "./database/db.js";
+import productRoutes from "./routes/productRoutes.js"; 
+import categoryRoutes from "./routes/categoryRoutes.js";
+import { authenticateToken } from "./middleware/authMiddleware.js";
+import cartRoutes from "./routes/cartRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import addressRoutes from "./routes/addressRoutes.js";
+import adminRoutes from './routes/adminRoutes.js';
 
-env.config();
 
-// Developed By Abdul Saleem (abdulsaleem.cse21@mamcet.com)
 
-// PostgreSQL Client Setup
-const db = new pg.Client({
-  user: process.env.DATABASE_USER,
-  host: process.env.DATABASE_HOST,
-  database: process.env.DATABASE_NAME,
-  password: process.env.DATABASE_PASSWORD,
-  port: process.env.DATABASE_PORT,
-});
 
-db.connect();
-
-// Initialize Express App
+dotenv.config();
 const app = express();
 const port = 5000;
-let currentUserId = '';  // Store the current user's ID for profile-related operations
 
-// Middleware to parse JSON requests
+// Middleware
 app.use(express.json());
-app.use(cors());  // Enable CORS for cross-origin requests
 
-// Secret key for JWT (replace in production)
-const SECRET_KEY = process.env.SECRET__KEY;
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
+
+app.use(express.json({ limit: "10mb" })); 
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 // Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/categories",categoryRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes ,authenticateToken);
+app.use("/api", addressRoutes);
+app.use('/admin', adminRoutes);
 
-// User Registration
-app.post('/api/register', async (req, res) => {
-  const { email, password, username } = req.body;
+app.get("/api/products/:id", async (req, res) => {
+  const { id } = req.params;
+
   try {
-    // Hash the password for secure storage
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Fetch the product details
+  
+  const query = `
+      SELECT 
+        p.*, 
+        c.name AS category_name, 
+        u.username AS seller_name
+      FROM products p
+      JOIN categories c ON p.category_id = c.id
+      JOIN users u ON p.seller_id = u.id
+      WHERE p.id = $1
+    `;
 
-    // Insert user into the database
+const productResult = await db.query(query, [id]);
+
+    if (productResult.rows.length === 0) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Fetch reviews for the product
+    const reviewsResult = await db.query("SELECT * FROM reviews WHERE product_id = $1 ORDER BY created_at DESC", [id]);
+
+    res.json({
+      product: productResult.rows[0],
+      reviews: reviewsResult.rows,  // Return the list of reviews
+    });
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.post("/api/products/:id/reviews", async (req, res) => {
+  const { id } = req.params; // Product ID
+  const { userId, rating, comment ,image} = req.body; // Extract user input
+
+  // Validate input
+  if (!userId || !rating || !comment) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
     const result = await db.query(
-      "INSERT INTO users (email, password, username) VALUES ($1, $2, $3) RETURNING id",
-      [email, hashedPassword, username]
+      "INSERT INTO reviews (product_id, user_id, rating, comment,image) VALUES ($1, $2, $3, $4,$5) RETURNING *",
+      [id, userId, rating, comment,image]
     );
 
-    // Generate a JWT token for the registered user
-    const token = jwt.sign({ userId: result.rows[0].id }, SECRET_KEY, { expiresIn: '1h' });
-
-    res.status(200).json({ message: "User registered successfully", token });
+    res.status(201).json({ success: true, review: result.rows[0] });
   } catch (error) {
-    console.error("Error during registration:", error);
-    res.status(500).json({ message: "Error registering user", error: error.message });
+    console.error("Error adding review:", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-// User Login
-app.post('/api/login', async (req, res) => {
-  const { email, password } = req.body;
+
+app.get("/api/user/:id", authenticateToken, async (req, res) => {
+  const userId = req.params.id;
+
   try {
-    // Retrieve the user by email
-    const result = await db.query("SELECT * FROM users WHERE email = $1", [email]);
-    if (result.rows.length === 0) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+    // Fetch username from database
+    const user = await db.query("SELECT username FROM users WHERE id = $1", [userId]);
 
-    const user = result.rows[0];
+    if (user.rows.length === 0) return res.status(404).json({ message: "User not found" });
 
-    // Compare the password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    // Generate a JWT token for the authenticated user
-    const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1h' });
-    currentUserId = user.id;
-
-    res.json({ message: "Login successful", token });
+    res.json({ username: user.rows[0].username }); // Send username to frontend
   } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ message: "Error logging in", error: error.message });
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-// Middleware to verify JWT
-const authenticateToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) {
-    return res.sendStatus(401);
-  }
 
-  jwt.verify(token, SECRET_KEY, (err, user) => {
-    if (err) {
-      return res.sendStatus(403);
-    }
-    req.user = user;
-    currentUserId = user.userId;  // Update the current user's ID
-    next();
-  });
-};
 
-// Protected Route Example
-app.get('/api/protected', authenticateToken, (req, res) => {
-  res.json({ message: "This is a protected route", userId: req.user.userId });
+
+// Default route
+app.get("/", (req, res) => {
+  res.send("API is running...");
 });
 
-// Public Routes
-
-// Example route to fetch lab resources
-app.get('/api', async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM lab_resources");
-    res.json(result.rows);
-  } catch (error) {
-    console.error("Error fetching lab resources:", error);
-    res.status(500).json({ message: "Error fetching lab resources", error: error.message });
-  }
-});
-
-// Route to fetch IoT components
-app.get('/api/resources', async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM iot_components");
-    res.json(result.rows);
-  } catch (error) {
-    console.error("Error fetching IoT components:", error);
-    res.status(500).json({ message: "Error fetching IoT components", error: error.message });
-  }
-});
-
-// Route to fetch current user's data
-app.get('/api/user', authenticateToken, async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM users WHERE id = $1", [currentUserId]);
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    res.status(500).json({ message: "Error fetching user data", error: error.message });
-  }
-});
-
-// 404 Error Handling for Unmatched Routes
+// 404 Handler
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-// Start the Server
+// Start Server
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`🚀 Server running on http://localhost:${port}`);
 });
 
-// Developed By Abdul Saleem (abdulsaleem.cse21@mamcet.com)

@@ -1,0 +1,122 @@
+/* Orders Page Container */
+.orders-page.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Header */
+  .orders-page h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Orders List */
+  .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Individual Order Card */
+  .order-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+  }
+  
+  .order-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0 0 10px 0;
+  }
+  
+  .order-price,
+  .payment-method,
+  .order-date {
+    color: #555;
+    font-size: 1.1rem;
+    margin: 5px 0;
+  }
+  
+  /* Items List */
+  .order-items {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  
+  .item-name {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .item-quantity {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .item-total {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Order Details */
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  
+  .order-details {
+    margin-top: 15px;
+  }
+  
+  /* Horizontal Divider */
+  hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+  }
+  
+  /* No Orders Message */
+  .orders-page p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .orders-page.container {
+      padding: 15px;
+    }
+  
+    .order-card {
+      padding: 15px;
+    }
+  
+    .order-item {
+      font-size: 0.9rem;
+    }
+  
+    .order-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .order-items {
+      padding: 0;
+    }
+  }
+  

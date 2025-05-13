@@ -27,28 +27,52 @@ function LoginForm() {
       return;
     }
 
-    // Use full API URL to avoid 404 error
-    const endpoint = isUserRegistered ? 'http://localhost:5000/api/login' : 'http://localhost:5000/api/register';
+    const endpoint = isUserRegistered 
+      ? 'http://localhost:5000/api/auth/login' 
+      : 'http://localhost:5000/api/auth/register';
+
     const payload = isUserRegistered 
-      ? { email, password }  // For login, only send email and password
-      : { email, password, username };  // For registration, send email, password, and username
+      ? { email, password }
+      : { email, password, username };
 
     try {
       const response = await axios.post(endpoint, payload);
-      if (response.status === 200) {
-        setMessage(isUserRegistered ? "Login successful" : "Registration successful");
-        
-        // Save the JWT token to localStorage for future requests
-        localStorage.setItem('token', response.data.token);
+      console.log("Response Data:", response.data);
 
-        // Redirect based on the action (login or register)
-        isUserRegistered ? navigate('/') : handleClick();  // Navigate to the homepage for login
+      if (response.status === 200) {
+        const { token, role } = response.data;
+        if (!token) {
+          console.error("Token missing in response");
+          return setMessage("Token not received from server");
+        }
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("role", role);
+        console.log("Stored Token:", localStorage.getItem("token"));
+        console.log("Stored Role:", localStorage.getItem("role"));
+
+        setMessage(isUserRegistered ? "Login successful" : "Registration successful");
+
+        // Role-based navigation
+        if (isUserRegistered) {
+          if (role === "customer") {
+            navigate("/");
+          } else if (role === "seller") {
+            navigate("/seller-home");
+          } else if (role === "admin") {
+            navigate("/admin-dashboard");
+          } else {
+            navigate("/"); // Default
+          }
+        } else {
+          handleClick(); // After registration go to login
+        }
       } else {
-        setMessage(response.data.message || 'Something went wrong');
+        setMessage(response.data.message || "Something went wrong");
       }
     } catch (error) {
-      console.error('Error:', error);
-      setMessage('Error: ' + (error.response?.data?.message || error.message));
+      console.error("Error:", error.response?.data || error.message);
+      setMessage("Error: " + (error.response?.data?.message || error.message));
     }
   }
 
@@ -78,15 +102,13 @@ function LoginForm() {
         onChange={(e) => setPassword(e.target.value)}
       />
       {!isUserRegistered && (
-        <>
-          <InputBox
-            type="password"
-            id="conf-password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </>
+        <InputBox
+          type="password"
+          id="conf-password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
       )}
       
       <Button type="submit" id="login-btn" text={isUserRegistered ? "Login" : "Register"} />

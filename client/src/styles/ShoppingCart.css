@@ -8,9 +8,9 @@
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.192);
     justify-self: center;
-    border: 1px solid rgb(0, 150, 50);
+    /* border: 2px solid rgb(0, 150, 50); */
 }
 .ShpItemstxt{
     display: flex;
@@ -42,7 +42,7 @@
 .cart-item img {
     width: 120px;  /* Increased image size */
     height: 120px; /* Ensures 1:1 aspect ratio */
-    object-fit: cover; /* Ensures images don't stretch */
+    object-fit: contain; /* Ensures images don't stretch */
     border-radius: 5px;
     margin-right: 15px;
 }
@@ -96,7 +96,7 @@
 .checkout-content {
     flex: 1;
     min-width: 320px;
-    background: rgb(212, 212, 212);
+    background: rgb(0, 150, 50);
     padding: 20px;
 }
 
@@ -109,11 +109,12 @@
 }
 .ckt , .ShA{
     margin-bottom: 20px;
+    color: #ffffff;
 }
 .total {
     display: flex;
     justify-content: space-between;
-    
+    color: #ffffff;
     margin-bottom: 15px;
     p{
         font-weight: 500;
@@ -123,15 +124,15 @@
 .checkout-btn {
     width: 100%;
     padding: 10px;
-    background-color: rgb(0, 150, 50);
+    background-color: rgb(7, 7, 7);
     color: white;
     border: none;
     border-radius: 25px;
     cursor: pointer;
 }
-hr{
-    color: rgb(0, 150, 50);
-}
+/* hr{
+    color: rgb(255, 255, 255);
+} */
 
 /* Responsive Design */
 @media (max-width: 768px) {

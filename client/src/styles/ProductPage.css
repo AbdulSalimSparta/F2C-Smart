@@ -1,31 +1,246 @@
-
-.ProductPageHead{
+.product-container p{
+  font-size: 13px;
+  font-weight: 400;
+}
+.product-hero{
   display: flex;
   justify-content: space-around;
   flex-direction: row;
 }
-.w-20 {
-  width: 20% !important;
-}
-.ProductImgBox{
-  margin: auto;
+
+.product-imagepage{
+  
   width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   img{
+    margin: auto;
+    width: 80% ;
     object-fit: contain;
   }
 }
-.ProductTxtBox{
+
+/* whole product details */
+
+.product-details{
   width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   padding: 20px;
 }
-@media (max-width: 800px) {
-  .ProductPageHead {
+.product-details .category{
+  color: rgb(0, 150, 50);
+  margin-bottom: 10px;
+}
+u{
+  text-decoration-color: rgb(0, 150, 50);
+}
+
+.product-details .price{
+  font-weight: 400;
+  color: orange;
+  font-size: large;
+}
+
+
+
+/* the Whole quantity managing box */
+
+.quantity-box{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  h5{
+    font-size: medium;
+    margin: auto 20px auto 20px;
+  }
+}
+
+/* the span containg qantity btns and inpts */
+.product-details .quantiy-btn-spanbox{
+  width: max-content;
+  display: flex;
   flex-direction: column;
+}
+
+/* Quantity Increase Input box */
+.product-details .quantity-input{
+ 
+  width : 80px;
+  height: 40px;
+  
+  text-align: center; 
+  font-size: small;
+  border: 1px solid #000;
+
+}
+
+
+/* The Quantiy Incfrement and decrement button + amd - */
+/* .product-details .quantity-btn-2{
+  height:20px ;
+  width: 20px;
+  border-radius:0px 0px 5px 0px ;
+  background-color: white;
+  border: 1px solid #000;
+}
+.product-details .quantity-btn-1{
+  height:20px ;
+  width: 20px;
+  background-color: white;
+  border-radius:0px 5px 0px 0px ;
+  border: 1px solid #000;
+} */
+
+/* the weight buttons */
+.weight-options button{
+    font-size: 12px;
+    height: 40px;
+    min-width: max-content;
+    width :70px;
+    background-color:rgb(0, 150, 50);
+    border: 0cap;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    margin-left: 10px;
+}
+.weight-options button:hover{
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.AboutProduct , .product-section{
+  text-align: justify;
+  text-justify: inter-word;
+  p{
+    text-justify: auto;
   }
+  
+}
+
+/* Add to cart Button */
+.add-to-cart{
+  
+  background-color:rgb(0, 150, 50) ;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 45%;
+  border-radius: 25px;
+  margin-top: 10px;
+}
+.cartandprice-btn{
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 20px;
+
+}
+
+.product-info table{
+  font-size: 14px;
+  th{
+    width: 30%;
   }
+  th , td {
+    padding-left: 15px;
+    padding-bottom: 10px;
+  }
+}
+
+/* Product Description & Farmer Details */
+.product-section-farmerdetails{
+  p{
+    margin: 2px;
+  }
+}
+/* Customer Reviews */
+.product-section .review {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-left: 5px solid rgb(0, 150, 50);
+  background-color: #f7fff0;
+}
+
+/* Review Form */
+.review-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.review-form h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.review-form input,
+.review-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+.review-form button {
+  background: rgb(0, 150, 50);
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-top: 15px;
+  transition: all 0.3s;
+}
+
+.review-form button:hover {
+  background: rgb(0, 120, 40);
+}
+
+
+@media (max-width: 800px) {
+  .product-imagepage{
+    
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+      margin: auto;
+      width: 80% ;
+      object-fit: contain;
+    }
+  }
+  .product-hero{
+  flex-direction: column;
+    }
+
+  .add-to-cart{
+    width: 100%;
+  }
+  .cartandprice-btn{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .product-details{
+    width: 100%;
+  }
+}
 
   

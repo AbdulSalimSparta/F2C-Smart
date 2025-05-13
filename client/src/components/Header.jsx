@@ -21,7 +21,7 @@ function Header() {
           <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li><Link to="/" className="nav-link">Home</Link></li>
               <li><Link to="/category" className="nav-link">Category</Link></li>
-              <li><Link to="/products" className="nav-link">Products</Link></li>
+              <li><Link to="/orders" className="nav-link">Orders</Link></li>
               <li><Link to="/cart" className="nav-link">Cart</Link></li>
           </ul>
           <div className="dropdown text-end">

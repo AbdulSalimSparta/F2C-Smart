@@ -1,0 +1,29 @@
+.order-success{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+.order-thanks{
+    display: flex;
+    flex-direction: column;
+    h1{
+        
+        text-align: center;
+    }
+    p{
+        font-size: medium;
+    }
+    .back{
+        color: white;
+    }
+    button{
+        background-color: rgb(0,150,50);
+        width: 300px;
+        padding: 10px;
+        margin: auto;
+        border: none;
+        border-radius: 25px;
+        align-self: center;
+    }
+}
