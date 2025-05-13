@@ -55,4 +55,35 @@ router.get("/metrics", async (req, res) => {
   }
 });
 
+// GET /admin/pending-products
+router.get('/pending-products', async (req, res) => {
+  try {
+    const result = await db.query(
+      `SELECT p.*, c.name AS category_name, u.username AS seller_name 
+       FROM products p 
+       JOIN categories c ON p.category_id = c.id
+       JOIN users u ON p.seller_id = u.id
+       WHERE approved = false`
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch pending products' });
+  }
+});
+
+// PUT /admin/approve-product/:id
+router.put('/approve-product/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await db.query(`UPDATE products SET approved = true WHERE id = $1`, [id]);
+    res.json({ message: 'Product approved successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to approve product' });
+  }
+});
+
+
+
 export default router;

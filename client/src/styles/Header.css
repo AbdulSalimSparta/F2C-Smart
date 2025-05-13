@@ -7,3 +7,8 @@
   .nav-link:hover {
     color: #555; /* Slightly darker color on hover */
   }
+
+  .logout-btn{
+    border: none;
+    background: none;
+  }

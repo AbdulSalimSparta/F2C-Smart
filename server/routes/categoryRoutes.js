@@ -30,6 +30,7 @@ router.get("/:categoryId/products", async (req, res) => {
             WHERE p.category_id = $1 
               AND p.name ILIKE $2 
               AND p.price BETWEEN $3 AND $4
+              AND approved IS true
         `;
         console.log("Executing SQL Query:", query);  // Debugging
 

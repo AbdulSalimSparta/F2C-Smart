@@ -7,7 +7,7 @@ export const addToCart = async (req, res) => {
   console.log(userId);
   try {
     // Check if the product exists
-    const product = await db.query("SELECT * FROM products WHERE id = $1", [productId]);
+    const product = await db.query("SELECT * FROM products WHERE id = $1 AND approved IS true", [productId]);
     if (product.rows.length === 0) {
       return res.status(404).json({ message: "Product not found" });
     }

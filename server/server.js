@@ -11,7 +11,7 @@ import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import addressRoutes from "./routes/addressRoutes.js";
 import adminRoutes from './routes/adminRoutes.js';
-
+import farmerRoutes from "./routes/farmerRoutes.js"
 
 
 
@@ -42,6 +42,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes ,authenticateToken);
 app.use("/api", addressRoutes);
 app.use('/admin', adminRoutes);
+app.use('/api/farmer', farmerRoutes);
 
 app.get("/api/products/:id", async (req, res) => {
   const { id } = req.params;
@@ -58,6 +59,7 @@ app.get("/api/products/:id", async (req, res) => {
       JOIN categories c ON p.category_id = c.id
       JOIN users u ON p.seller_id = u.id
       WHERE p.id = $1
+      AND approved IS true
     `;
 
 const productResult = await db.query(query, [id]);

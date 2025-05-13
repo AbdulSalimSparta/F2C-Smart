@@ -15,9 +15,9 @@ function Header() {
             <img src="../Images/f2c_logo 1.svg" alt="log" width="50" height="80"/>
           </a>
           <h4 className='text-dark pe-3 pt-1'>F2C!</h4>
-          <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          {/* <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
             <input type="search" className="form-control" placeholder="Search..." aria-label="Search" />
-          </form>
+          </form> */}
           <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li><Link to="/" className="nav-link">Home</Link></li>
               <li><Link to="/category" className="nav-link">Category</Link></li>
@@ -28,8 +28,11 @@ function Header() {
             <Link to="/profile" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" className="rounded-circle" />
             </Link>
-            <ul className="dropdown-menu text-small">
-              <li><LogoutButton /></li>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a className="dropdown-item" href="#"><i className="fas fa-sliders-h fa-fw"></i> Account</a></li>
+            <li><a className="dropdown-item" href="#"><i className="fas fa-cog fa-fw"></i> Settings</a></li>
+            <li><hr className="dropdown-divider"/></li>
+            <li><a className="dropdown-item" href="#"><i className="fas fa-sign-out-alt fa-fw"></i> <LogoutButton /></a></li>
             </ul>
           </div>
         </div>

@@ -14,6 +14,7 @@ router.get("/", async (req, res) => {
       FROM products p
       JOIN categories c ON p.category_id = c.id
       JOIN users u ON p.seller_id = u.id
+      WHERE approved IS true
     `);  // Ensure this table exists in DB
     res.json(result.rows);
   } catch (error) {
