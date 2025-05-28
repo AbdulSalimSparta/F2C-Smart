@@ -12,6 +12,7 @@ router.get("/metrics", async (req, res) => {
       totalProducts,
       pendingOrders,
       monthlyRevenue,
+      dailyRevenue,
       topProducts
     ] = await Promise.all([
       db.query(`SELECT SUM(total_price) AS total_revenue FROM orders WHERE status IN ('pending', 'completed')`),
@@ -30,6 +31,15 @@ router.get("/metrics", async (req, res) => {
       `),
       db.query(`
         SELECT 
+          TO_CHAR(created_at, 'YYYY-MM-DD') AS date,
+          SUM(total_price) AS revenue
+        FROM orders
+        WHERE status IN ('pending', 'completed')
+        GROUP BY date
+        ORDER BY date
+      `),
+      db.query(`
+        SELECT 
           name,
           COUNT(order_items.product_id) AS order_count
         FROM order_items
@@ -39,7 +49,7 @@ router.get("/metrics", async (req, res) => {
         LIMIT 5
       `)
     ]);
-
+    console.log(dailyRevenue.rows);
     res.json({
       totalRevenue: totalRevenue.rows[0].total_revenue || 0,
       totalUsers: totalUsers.rows[0].total_users || 0,
@@ -47,6 +57,7 @@ router.get("/metrics", async (req, res) => {
       totalProducts: totalProducts.rows[0].total_products || 0,
       pendingOrders: pendingOrders.rows[0].pending_orders || 0,
       monthlyRevenue: monthlyRevenue.rows,
+      dailyRevenue: dailyRevenue.rows,
       topProducts: topProducts.rows,
     });
   } catch (error) {

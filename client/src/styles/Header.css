@@ -11,4 +11,14 @@
   .logout-btn{
     border: none;
     background: none;
+    color: black;
   }
+
+  .translate-widget {
+  border: none;
+  font-size: 14px;
+  margin-right: 10px;
+  color: #333;
+  border-radius: 50%;
+}
+

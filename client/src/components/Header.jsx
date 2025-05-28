@@ -1,4 +1,4 @@
-import React from 'react';
+import {React,useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import LogoutButton from './LogoutButton';
@@ -7,6 +7,27 @@ import "../styles/Header.css";
 
 
 function Header() {
+  useEffect(() => {
+    // Only add script if it’s not already added
+    const existingScript = document.getElementById('google-translate-script');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.id = 'google-translate-script';
+      script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.async = true;
+      document.body.appendChild(script);
+
+      // Define the global callback
+      window.googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'en,ta,hi,te,ml,bn', // Customize regional languages
+          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      };
+    }
+  }, []);
+  
   return (
     <header className="p-2 mb-0 ">
       <div className="container">
@@ -24,12 +45,15 @@ function Header() {
               <li><Link to="/orders" className="nav-link">Orders</Link></li>
               <li><Link to="/cart" className="nav-link">Cart</Link></li>
           </ul>
+
+           <div id="google_translate_element" className="me-3"></div>
+
           <div className="dropdown text-end">
             <Link to="/profile" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" className="rounded-circle" />
             </Link>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a className="dropdown-item" href="#"><i className="fas fa-sliders-h fa-fw"></i> Account</a></li>
+            <li><Link to="/userprofile" className="dropdown-item" href="#"><i className="fas fa-sliders-h fa-fw"></i> Account</Link></li>
             <li><a className="dropdown-item" href="#"><i className="fas fa-cog fa-fw"></i> Settings</a></li>
             <li><hr className="dropdown-divider"/></li>
             <li><a className="dropdown-item" href="#"><i className="fas fa-sign-out-alt fa-fw"></i> <LogoutButton /></a></li>

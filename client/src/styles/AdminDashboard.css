@@ -1,12 +1,4 @@
-.cardadmin {
-    padding: 1.5rem;
-    background: #f9f9f9;
-    box-shadow: 0 2px 8px rgba(190, 173, 173, 0.1);
-    border-radius: 10px;
-    min-width: 180px;
-    text-align: center;
-    font-size: larger;
-  }
+
   
   /* Spinner */
   .spinner {
@@ -18,24 +10,156 @@
     animation: spin 1s linear infinite;
   }
   
-  .pending-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
+  /* Admin Dashboard Base Styles */
+.admin-dashboard {
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
 }
 
-.pending-table th, .pending-table td {
-  border: 1px solid #ddd;
-  padding: 0.75rem;
-  text-align: left;
+/* Card Styling */
+.cardadmin {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+  flex: 1 1 calc(25% - 1rem);
+  transition: all 0.3s ease;
+}
+
+.cardadmin:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cardadmin h3 {
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.cardadmin p {
+  font-size: 1.2rem;
+}
+
+/* Responsive Flex Layout for Cards */
+.card-container {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .cardadmin {
+    flex: 1 1 calc(50% - 1rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .cardadmin {
+    flex: 1 1 100%;
+  }
+}
+
+/* Chart Section Styling */
+.chart-section {
+  margin-top: 3rem;
+}
+
+.chart-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Table for Pending Products */
+.pending-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pending-table th,
+.pending-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
 }
 
 .pending-table th {
-  background-color: #f2f2f2;
+  background-color: #f4f4f4;
+  font-weight: 600;
 }
 
+.pending-table tr:hover {
+  background-color: #f1f1f1;
+}
 
-  @keyframes spin {
-    to { transform: rotate(360deg); }
+.pending-table td button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pending-table td button:hover {
+  background-color: #45a049;
+}
+
+/* Pie Chart Section */
+.pie-chart-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+}
+
+.pie-chart-container > div {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.pie-chart-container h2 {
+  margin-bottom: 1rem;
+}
+
+/* Bar Chart for Top Selling Products */
+.bar-chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.bar-chart-container > div {
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+
+/* Button Styles */
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .pie-chart-container,
+  .bar-chart-container {
+    flex-direction: column;
   }
-  
+}

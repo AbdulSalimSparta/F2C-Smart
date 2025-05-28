@@ -1,5 +1,14 @@
+
+.seller-page-headline{
+    display: flex;
+    justify-content: left;
+    font-size: larger;
+    padding-left: 20px;
+    margin-bottom: 0%;
+}
 .seller-page-title{
     display: flex;
-    justify-content: center;
-    font-size: large;
+    justify-content: left;
+    font-size: 3rem;
+    padding-left: 20px;
 }

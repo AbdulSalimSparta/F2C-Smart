@@ -20,3 +20,21 @@
   padding-top: 5%;
 }
 
+/* Hide the top banner */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
+
+/* Hide the Google Translate logo (optional) */
+.goog-logo-link {
+  display: none !important;
+}
+
+/* Hide the "Powered by Google" */
+.goog-te-gadget span {
+  display: none !important;
+}
+

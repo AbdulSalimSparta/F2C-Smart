@@ -11,7 +11,9 @@ import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import addressRoutes from "./routes/addressRoutes.js";
 import adminRoutes from './routes/adminRoutes.js';
-import farmerRoutes from "./routes/farmerRoutes.js"
+import farmerRoutes from "./routes/farmerRoutes.js";
+
+
 
 
 
@@ -43,6 +45,8 @@ app.use("/api/orders", orderRoutes ,authenticateToken);
 app.use("/api", addressRoutes);
 app.use('/admin', adminRoutes);
 app.use('/api/farmer', farmerRoutes);
+app.use('/uploads', express.static('uploads'));
+
 
 app.get("/api/products/:id", async (req, res) => {
   const { id } = req.params;
